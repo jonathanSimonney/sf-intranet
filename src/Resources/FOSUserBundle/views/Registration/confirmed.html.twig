@@ -1,0 +1,22 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <p>
+        Welcome {{user.username}}, your account have successfully been created, click on the button below to start using the
+        KManager !
+    </p>
+
+    <p>
+        You'll be able to create new tickets for our admin, once your ticket is created, you and the admins could
+        discuss about your issue to find a way to solve it.
+    </p>
+    <p>
+        Eventually, admins will assign some tickets to you, you'll then have the possibility to participate to the discussion about
+        that issue.
+    </p>
+    {% if targetUrl %}
+    <p><a class="red accent-2 col s2 btn waves-effect waves-light" href="{{ targetUrl }}">Go to my Tickets List !</a></p>
+    {% endif %}
+{% endblock fos_user_content %}
