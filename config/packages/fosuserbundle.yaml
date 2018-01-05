@@ -2,7 +2,7 @@
 fos_user:
     registration: # hack from https://github.com/FriendsOfSymfony/FOSUserBundle/issues/2667
         confirmation:
-            enabled: true
+            enabled: false
     db_driver: orm # other valid values are 'mongodb' and 'couchdb'
     firewall_name: main
     user_class: App\Entity\User
