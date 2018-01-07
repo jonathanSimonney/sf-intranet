@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+
+{% set role = 'student' %}
+
+{% if is_granted('ROLE_TEACHER') %}
+    {% set role = 'teacher' %}
+{% elseif is_granted('ROLE_ADMIN') %}
+    {% set role = 'admin' %}
+{% endif %}
+
+{% block navLinks %}
+    <li><a href="{{ path('fos_user_security_logout') }}">logout</a></li>
+{% endblock %}

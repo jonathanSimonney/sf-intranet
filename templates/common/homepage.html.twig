@@ -1,0 +1,12 @@
+{% extends "common/connected.html.twig" %}
+
+{% block navLinks %}
+    <li>{{ role }}</li>
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <div>
+        Welcome back, {{ app.user.username }}
+    </div>
+{% endblock %}
