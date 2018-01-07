@@ -1,10 +1,6 @@
-{% extends "@FOSUser/layout.html.twig" %}
+{% extends "common/connected.html.twig" %}
 
 {% trans_default_domain 'FOSUserBundle' %}
-
-{% block navLinks %}
-    <li><a href="{{ path('fos_user_security_logout') }}">logout</a></li>
-{% endblock %}
 
 {% block fos_user_content %}
     <p>
