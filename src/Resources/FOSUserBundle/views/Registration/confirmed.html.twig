@@ -2,6 +2,10 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
+{% block navLinks %}
+    <li><a href="{{ path('fos_user_security_logout') }}">logout</a></li>
+{% endblock %}
+
 {% block fos_user_content %}
     <p>
         Welcome {{user.username}}, your account have successfully been created, click on the button below to start using the
@@ -9,3 +13,4 @@
     </p>
     <p><a class="red accent-2 col s2 btn waves-effect waves-light" href="{{ path('homepage') }}">Go to my Homepage !</a></p>
 {% endblock fos_user_content %}
+
