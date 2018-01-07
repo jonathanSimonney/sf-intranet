@@ -2,11 +2,11 @@
 
 {% trans_default_domain 'FOSUserBundle' %}
 
-{% block fos_user_content %}
+{% block body %}
     <p>
         Welcome {{user.username}}, your account have successfully been created, click on the button below to start using the
         KIntranet !
     </p>
     <p><a class="red accent-2 col s2 btn waves-effect waves-light" href="{{ path('homepage') }}">Go to my Homepage !</a></p>
-{% endblock fos_user_content %}
+{% endblock %}
 
