@@ -34,6 +34,7 @@ class Grade
     /**
      * @var string
      *
+     * @Assert\NotNull()
      * @ORM\Column(type="string")
      */
     private $comment;
@@ -57,17 +58,9 @@ class Grade
     }
 
     /**
-     * @param mixed $id
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
-    }
-
-    /**
      * @return int
      */
-    public function getValue(): int
+    public function getValue()
     {
         return $this->value;
     }
@@ -83,7 +76,7 @@ class Grade
     /**
      * @return string
      */
-    public function getComment(): string
+    public function getComment()
     {
         return $this->comment;
     }

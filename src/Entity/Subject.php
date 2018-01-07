@@ -4,9 +4,14 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SubjectRepository")
+ * @UniqueEntity("name")
  */
 class Subject
 {
@@ -19,6 +24,7 @@ class Subject
 
     /**
      * @var string
+     * @Assert\NotNull()
      *
      * @ORM\Column(type="string")
      */
@@ -47,10 +53,25 @@ class Subject
      */
     protected $students;
 
+    public function __construct()
+    {
+        $this->students = new ArrayCollection();
+        $this->teachers = new ArrayCollection();
+        $this->grades = new ArrayCollection();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
     /**
      * @return string
      */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }

@@ -40,6 +40,22 @@ class User extends BaseUser
      */
     protected $learnedSubjects;
 
+    public function __construct()
+    {
+        $this->grades = new ArrayCollection();
+        $this->taughtSubjects = new ArrayCollection();
+        $this->learnedSubjects = new ArrayCollection();
+        parent::__construct();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
     /**
      * @return mixed
      */

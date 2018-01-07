@@ -2,10 +2,11 @@
 
 {% set role = 'student' %}
 
-{% if is_granted('ROLE_TEACHER') %}
-    {% set role = 'teacher' %}
-{% elseif is_granted('ROLE_ADMIN') %}
+
+{% if is_granted('ROLE_ADMIN') %}
     {% set role = 'admin' %}
+{% elseif is_granted('ROLE_TEACHER') %}
+    {% set role = 'teacher' %}
 {% endif %}
 
 {% block navLinks %}
