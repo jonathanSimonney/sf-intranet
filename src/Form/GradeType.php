@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Grade;
+use App\Entity\Subject;
 use App\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,6 +24,18 @@ class GradeType extends AbstractType
                 'placeholder'   => 'Select a student',
                 'choices'       => $options['students']
             ));
+        if ($options['isAdmin']){
+            $builder->add('subject', EntityType::class, array(
+                'class'       => Subject::class,
+                'placeholder' => 'Select a subject',
+            ));
+        }else{
+            $builder->add('subject', EntityType::class, array(
+                'class'         => Subject::class,
+                'placeholder'   => 'Select a subject',
+                'choices'       => $options['subjects']
+            ));
+        }
 
 
         ;

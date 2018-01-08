@@ -36,6 +36,7 @@ class TeacherController extends Controller
             $options['students'] = $em->getRepository(User::class)->findByRole('ROLE_USER');
         }else{
             $options['students'] = $this->getUser()->getStudents();
+            $options['subjects'] = $this->getUser()->getTaughtSubjects();
         }
 
         $form = $this->createForm('App\Form\GradeType', $grade, $options);

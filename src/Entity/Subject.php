@@ -183,4 +183,11 @@ class Subject
         // uncomment if you want to update other side
         //$student->removeLearnedSubject($this);
     }
+
+    //------------------------------------------------------------------------------------------------------------------
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }
