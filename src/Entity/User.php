@@ -46,6 +46,7 @@ class User extends BaseUser
         $this->taughtSubjects = new ArrayCollection();
         $this->learnedSubjects = new ArrayCollection();
         parent::__construct();
+        $this->roles = ['ROLE_USER'];
     }
 
     /**
@@ -156,5 +157,13 @@ class User extends BaseUser
         //$learnedSubject->setUser(null);
     }
 
+    //-------------------------------------------other utilities function ---------------------------------------------
 
+    public function getStudents()
+    {
+        var_dump($this->getRoles());die;
+        if ($this->getRoles()){
+
+        }
+    }
 }

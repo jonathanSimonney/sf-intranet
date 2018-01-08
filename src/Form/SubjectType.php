@@ -12,7 +12,7 @@ class SubjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
+            ->add('name', null, array('attr'=> array('class'=>'materialize-textarea')))
         ;
     }
 

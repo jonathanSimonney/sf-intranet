@@ -1,0 +1,17 @@
+{% extends 'common/connected.html.twig' %}
+
+{% block navLinks %}
+    <li><a href="#">Back to idk (probably just leave the default header here...)</a></li>
+    {{ parent() }}
+{% endblock %}
+
+{% block body %}
+    <h1>Grade creation</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button class="red accent-2 col s2 offset-s1 btn waves-effect waves-light" type="submit" name="action">
+        Create
+    </button>
+    {{ form_end(form) }}
+{% endblock %}

@@ -45,6 +45,11 @@ class Grade
     private $owner;
 
     /**
+    * @ORM\ManyToOne(targetEntity="App\Entity\User")
+    */
+    private $givenBy;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="grades")
      */
     private $subject;
@@ -103,6 +108,22 @@ class Grade
     public function setOwner($owner): void
     {
         $this->owner = $owner;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGivenBy()
+    {
+        return $this->givenBy;
+    }
+
+    /**
+     * @param mixed $givenBy
+     */
+    public function setGivenBy($givenBy): void
+    {
+        $this->givenBy = $givenBy;
     }
 
     /**
