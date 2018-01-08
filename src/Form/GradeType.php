@@ -17,21 +17,12 @@ class GradeType extends AbstractType
     {
         $builder
             ->add('value', NumberType::class)
-            ->add('comment', null, array('attr'=> array('class'=>'materialize-textarea')));
-        if ($options['isAdmin']){
-            $builder->add('owner', EntityType::class, array(
+            ->add('comment', null, array('attr'=> array('class'=>'materialize-textarea')))
+            ->add('owner', EntityType::class, array(
                 'class'         => User::class,
                 'placeholder'   => 'Select a student',
                 'choices'       => $options['students']
             ));
-        }else{
-            $builder
-                ->add('owner', EntityType::class, array(
-                    'class'         => User::class,
-                    'choices'       => $options['students'],
-                    'placeholder'   => 'Select a student'
-            ));
-        }
 
 
         ;
