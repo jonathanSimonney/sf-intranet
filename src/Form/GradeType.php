@@ -18,16 +18,27 @@ class GradeType extends AbstractType
     {
         $builder
             ->add('value', NumberType::class)
-            ->add('comment', null, array('attr'=> array('class'=>'materialize-textarea')))
-            ->add('owner', EntityType::class, array(
+            ->add('comment', null, array('attr'=> array('class'=>'materialize-textarea')));
+
+        if ($options['ownerDisabled']){
+            $builder->add('owner', EntityType::class, array(
+                'class'         => User::class,
+                'placeholder'   => 'Select a student',
+                'disabled'      => true,
+            ));
+        }else{
+            $builder->add('owner', EntityType::class, array(
                 'class'         => User::class,
                 'placeholder'   => 'Select a student',
                 'choices'       => $options['students']
             ));
-        if ($options['isAdmin']){
+        }
+
+        if ($options['subjectDisabled']){
             $builder->add('subject', EntityType::class, array(
                 'class'       => Subject::class,
                 'placeholder' => 'Select a subject',
+                'disabled'    => true,
             ));
         }else{
             $builder->add('subject', EntityType::class, array(
@@ -45,10 +56,12 @@ class GradeType extends AbstractType
     {
         $resolver->setDefaults([
             // uncomment if you want to bind to a class
-            'data_class' => Grade::class,
-            'isAdmin'    => false,
-            'students'   => null,
-            'subjects'   => null,
+            'data_class'      => Grade::class,
+            'isAdmin'         => false,
+            'students'        => null,
+            'subjects'        => null,
+            'ownerDisabled'   => false,
+            'subjectDisabled' => false,
         ]);
     }
 }
