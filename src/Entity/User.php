@@ -163,8 +163,7 @@ class User extends BaseUser
 
     public function getStudents()
     {
-        $roles = $this->getRoles();
-        if (\in_array('ROLE_ADMIN', $roles) || !\in_array('ROLE_TEACHER', $roles)){
+        if ($this->getMaxRole() !== 'ROLE_TEACHER'){
             throw new AccessDeniedException('Only teachers can have students!');
         }
 
@@ -180,5 +179,18 @@ class User extends BaseUser
         }
 
         return $students;
+    }
+
+    public function getMaxRole()
+    {
+        $roles = $this->getRoles();
+        if (\in_array('ROLE_ADMIN', $roles)){
+            return 'ROLE_ADMIN';
+        }
+        if (\in_array('ROLE_TEACHER', $roles)){
+            return 'ROLE_TEACHER';
+        }
+
+        return 'ROLE_USER';
     }
 }
