@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -33,14 +34,14 @@ class Subject
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Grade", mappedBy="subject", cascade={"remove"})
      *
-     * @var ArrayCollection
+     * @var Collection
      */
     protected $grades;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="taughtSubjects")
      *
-     * @var ArrayCollection
+     * @var Collection
      * @ORM\JoinTable(name="teachers")
      */
     protected $teachers;
@@ -49,7 +50,7 @@ class Subject
      * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="learnedSubjects")
      *
      * @ORM\JoinTable(name="students")
-     * @var ArrayCollection
+     * @var Collection
      */
     protected $students;
 
@@ -85,49 +86,49 @@ class Subject
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getGrades(): ArrayCollection
+    public function getGrades(): Collection
     {
         return $this->grades;
     }
 
     /**
-     * @param ArrayCollection $grades
+     * @param Collection $grades
      */
-    public function setGrades(ArrayCollection $grades): void
+    public function setGrades(Collection $grades): void
     {
         $this->grades = $grades;
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getTeachers(): ArrayCollection
+    public function getTeachers(): Collection
     {
         return $this->teachers;
     }
 
     /**
-     * @param ArrayCollection $teachers
+     * @param Collection $teachers
      */
-    public function setTeachers(ArrayCollection $teachers): void
+    public function setTeachers(Collection $teachers): void
     {
         $this->teachers = $teachers;
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getStudents(): ArrayCollection
+    public function getStudents(): Collection
     {
         return $this->students;
     }
 
     /**
-     * @param ArrayCollection $students
+     * @param Collection $students
      */
-    public function setStudents(ArrayCollection $students): void
+    public function setStudents(Collection $students): void
     {
         $this->students = $students;
     }

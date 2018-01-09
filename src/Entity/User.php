@@ -3,8 +3,10 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -20,13 +22,13 @@ class User extends BaseUser
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Grade", mappedBy="owner", cascade={"remove"})
-     * @var ArrayCollection
+     * @var Collection
      */
     protected $grades;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Subject", inversedBy="teachers")
-     * @var ArrayCollection
+     * @var Collection
      *
      * @ORM\JoinTable(name="teachers")
      */
@@ -34,7 +36,7 @@ class User extends BaseUser
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Subject", inversedBy="students")
-     * @var ArrayCollection
+     * @var Collection
      *
      * @ORM\JoinTable(name="students")
      */
@@ -161,9 +163,22 @@ class User extends BaseUser
 
     public function getStudents()
     {
-        var_dump($this->getRoles());die;
-        if ($this->getRoles()){
-
+        $roles = $this->getRoles();
+        if (\in_array('ROLE_ADMIN', $roles) || !\in_array('ROLE_TEACHER', $roles)){
+            throw new AccessDeniedException('Only teachers can have students!');
         }
+
+        $students = array();
+
+        foreach ($this->getTaughtSubjects() as $taughtSubject){
+            /** @var Subject $taughtSubject */
+            if (!empty($students)) {
+                $students = array_merge($students, $taughtSubject->getStudents()->toArray());
+            }else{
+                $students = $taughtSubject->getStudents()->toArray();
+            }
+        }
+
+        return $students;
     }
 }

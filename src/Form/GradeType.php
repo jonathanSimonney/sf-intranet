@@ -48,6 +48,7 @@ class GradeType extends AbstractType
             'data_class' => Grade::class,
             'isAdmin'    => false,
             'students'   => null,
+            'subjects'   => null,
         ]);
     }
 }
