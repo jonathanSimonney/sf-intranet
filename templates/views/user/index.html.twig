@@ -1,0 +1,27 @@
+{% extends 'common/connected.html.twig' %}
+
+{% block body %}
+    <h1>User list</h1>
+    {% for user in userList %}
+        <div class="{{ user.getMaxRole }} user">
+            <div class="section" >
+                <h2 class="row" >
+                    <a class="ticket_title red-text text-darken-1" href="{{ path('user_show', { 'id': user.id }) }}">{{ user.username }}</a>
+                </h2>
+                {% if user.getMaxRole != 'ROLE_ADMIN' %}
+                    <div class="row">
+                        <a class="col s2 red accent-2 btn waves-effect waves-light" href="{{ path('user_impersonate', { 'id': user.id }) }}">login as</a>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="divider"></div>
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {% if role == 'student' %}
+        {{ parent() }}
+        <script src={{ asset('switchUser.js')}}></script>
+    {% endif %}
+{% endblock %}
