@@ -115,10 +115,15 @@ class TeacherController extends Controller
      */
     public function showGradeAction(Grade $grade)
     {
-        $userRole = $student->getMaxRole();
-        if ($userRole !== 'ROLE_USER'){
-            throw new InvalidArgumentException("Student expected, ".$userRole." given");
-        }
+        $grade = array();
+
+        foreach ($this->getGivenBy() as $givenBy){
+            /** @var Subject $taughtSubject */
+            if (!empty($grade)) {
+                $grade = array_merge($grades, $givenBy->getUser()()->toArray());
+            }else{
+                $grade = $givenBy->getUser()()->toArray();
+            }
 
     }
 
@@ -139,7 +144,7 @@ class TeacherController extends Controller
         }
 
         $subjects = $student->getLearnedSubjects();
-        if (!$this->isGranted('ROLE_ADMIN')){
+        if (!$this->isGranted('ROLE_TEACHER')){
             $subjects = array_intersect($subjects, $this->getUser()->getTaughtSubjects());
         }
         return $subjects;

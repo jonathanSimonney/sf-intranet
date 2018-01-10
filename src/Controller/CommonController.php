@@ -57,7 +57,7 @@ class CommonController extends Controller
             $subject = array_intersect($subject, $this->getUser()->getTaughtSubjects());
         }
 
-        return $subject;
+        return $this->render('common/homepage.html.twig');
     }
 
 }

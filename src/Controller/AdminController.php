@@ -51,7 +51,10 @@ class AdminController extends Controller
         ));
     }
 
-    public function ChangeProfile(Request $request) {
+    public function editRights(Request $request) {
+
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
 
     }
 }
