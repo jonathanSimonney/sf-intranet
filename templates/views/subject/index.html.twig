@@ -2,6 +2,13 @@
 
 {% block body %}
     <h1>Subject list</h1>
+    {% if role == 'student' %}
+        <div id="subjectFilter" class="row">
+            <button class="red accent-2 col s2 offset-s1 btn waves-effect waves-light disabled" id="allSubject">all subjects</button>
+            <button class="red accent-2 col s2 offset-s1 btn waves-effect waves-light" id="mySubjects">my subjects</button>
+            <button class="red accent-2 col s2 offset-s1 btn waves-effect waves-light" id="unassignedSubjects">other subjects</button>
+        </div>
+    {% endif %}
     {% if subjectList|length == 0 %}
         No subject available.
         {% if role == 'student' %}
@@ -14,24 +21,33 @@
         {% endif %}
     {% endif %}
     {% for subject in subjectList %}
-        <div class="section" >
-            <h2 class="row" >
-                <a class="ticket_title red-text text-darken-1" href="{{ path('subject_show', { 'id': subject.id }) }}">{{ subject.name }}</a>
-            </h2>
-            {% if role == 'student' %}
-                <div class="row">
-                    {{ form_start(assignmentForms[subject.id].createView()) }}
-                    <button class="red accent-2 col s2 offset-s1 btn waves-effect waves-light" type="submit" name="action">
-                        {%  if subject.hasStudent(app.user) %}
-                            Unsign from course
-                        {% else %}
-                            Sign to course
-                        {% endif %}
-                    </button>
-                    {{ form_end(assignmentForms[subject.id].createView()) }}
-                </div>
-            {% endif %}
+        <div class="{% if subject.hasStudent(app.user) %} mySubject{% else %} notMySubject{% endif %} subject">
+            <div class="section" >
+                <h2 class="row" >
+                    <a class="ticket_title red-text text-darken-1" href="{{ path('subject_show', { 'id': subject.id }) }}">{{ subject.name }}</a>
+                </h2>
+                {% if role == 'student' %}
+                    <div class="row">
+                        {{ form_start(assignmentForms[subject.id].createView()) }}
+                        <button class="red accent-2 col s2 offset-s1 btn waves-effect waves-light" type="submit" name="action">
+                            {%  if subject.hasStudent(app.user) %}
+                                Unsign from course
+                            {% else %}
+                                Sign to course
+                            {% endif %}
+                        </button>
+                        {{ form_end(assignmentForms[subject.id].createView()) }}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="divider"></div>
         </div>
-        <div class="divider"></div>
     {% endfor %}
+{% endblock %}
+
+{% block javascripts %}
+    {% if role == 'student' %}
+        {{ parent() }}
+        <script src={{ asset('switchSubject.js')}}></script>
+    {% endif %}
 {% endblock %}
