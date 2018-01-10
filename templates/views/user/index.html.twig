@@ -18,7 +18,13 @@
                 </h2>
                 {% if user.getMaxRole != 'ROLE_ADMIN' %}
                     <div class="row">
-                        <a class="col s2 red accent-2 btn waves-effect waves-light" href="{{ path('user_impersonate', { 'id': user.id }) }}">login as</a>
+                        {% if user.getMaxRole == 'ROLE_USER' %}
+                            <a class="red accent-2 col s2 offset-s1 btn waves-effect waves-light"
+                               href="{{ path('new_grade_from_student', {'id': user.id}) }}">
+                                Create a grade
+                            </a>
+                        {% endif %}
+                        <a class="red accent-2 col s2 offset-s1 btn waves-effect waves-light" href="{{ path('user_impersonate', { 'id': user.id }) }}">login as</a>
                     </div>
                 {% endif %}
             </div>
