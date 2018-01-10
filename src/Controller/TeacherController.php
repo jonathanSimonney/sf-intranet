@@ -55,12 +55,12 @@ class TeacherController extends Controller
             $options['subjects'] = $this->getUser()->getTaughtSubjects();
         }
 
-        if ($options['ownerDisabled']){
-            $options['students'] = $this->getSubjectStudent($grade->getSubject());
+        if (isset($options['ownerDisabled']) && $options['ownerDisabled']){
+            $options['subjects'] = $this->getStudentSubjects($grade->getOwner());
         }
 
-        if ($options['subjectDisabled']){
-            $options['subjects'] = $this->getStudentSubjects($grade->getOwner());
+        if (isset($options['subjectDisabled']) && $options['subjectDisabled']){
+            $options['students'] = $this->getSubjectStudent($grade->getSubject());
         }
 
         $form = $this->createForm('App\Form\GradeType', $grade, $options);
