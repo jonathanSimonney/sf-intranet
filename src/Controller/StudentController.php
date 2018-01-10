@@ -20,4 +20,17 @@ class StudentController extends Controller
         return $this->render('@Maker/demoPage.html.twig', [ 'path' => str_replace($this->getParameter('kernel.project_dir').'/', '', __FILE__) ]);
     }
 
+    /**
+     * @Route("/grades", name="grade_index")
+     */
+
+    public function indexGradeAction() {
+
+        $em = $this->getDoctrine()->getManager();
+        $gradeList = $em->getRepository('App:Grade')->findAll();
+        return $this->render('views/grade/index.html.twig', array(
+            'gradeGroupedBySubject'     => $gradeList
+        ));
+    }
+
 }

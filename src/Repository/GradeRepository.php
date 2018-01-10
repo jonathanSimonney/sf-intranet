@@ -13,6 +13,14 @@ class GradeRepository extends ServiceEntityRepository
         parent::__construct($registry, Grade::class);
     }
 
+    public function getGroupedGrade()
+    {
+        return $this->createQueryBuilder('g')
+            ->groupBy('subject')
+            ->getQuery()
+            ->getResult();
+    }
+
     /*
     public function findBySomething($value)
     {

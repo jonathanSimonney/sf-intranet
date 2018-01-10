@@ -1,0 +1,23 @@
+{% extends 'common/connected.html.twig' %}
+
+{% block body %}
+    <h1>Grades</h1>
+
+    <div  class="row">
+        Average
+    </div>
+
+        <div>
+            <div class="section" >
+            </div>
+            {% for subject , gradeArray in gradeGroupedBySubject %}
+                <li>{{ gradeArray.subject }} : {{ gradeArray }}</li>
+            {% endfor %}
+            <div class="divider"></div>
+        </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src={{ asset('switchUser.js')}}></script>
+{% endblock %}
