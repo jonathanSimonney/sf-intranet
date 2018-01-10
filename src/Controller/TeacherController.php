@@ -21,12 +21,21 @@ use Symfony\Component\HttpFoundation\Response;
 class TeacherController extends Controller
 {
     /**
-     * @Route("/", name="teacher_index")
+     * Finds and displays a subject entity.
+     *
+     * @Route("/subject/{id}", name="subject_show")
+     * @Method("GET")
      */
-    public function index()
+    public function showSubjectAction(Subject $subject)
     {
-        // replace this line with your own code!
-        return $this->render('@Maker/demoPage.html.twig', [ 'path' => str_replace($this->getParameter('kernel.project_dir').'/', '', __FILE__) ]);
+        $this->checkSubjectCanBeAccessed($subject);
+
+        $studentList = $subject->getStudents();
+
+        return $this->render('views/subject/show.html.twig', array(
+            'subject'     => $subject,
+            'studentList' => $studentList,
+        ));
     }
 
 
@@ -76,6 +85,7 @@ class TeacherController extends Controller
      */
     public function newGradeFromSubjectAction(Request $request, Subject $subject)
     {
+        $this->checkSubjectCanBeAccessed($subject);
         $grade = new Grade();
         $grade->setSubject($subject);
 
@@ -88,6 +98,7 @@ class TeacherController extends Controller
      */
     public function newGradeFromStudentAction(Request $request, User $student)
     {
+        $this->checkStudentCanBeAccessed($student);
         $grade = new Grade();
         $grade->setOwner($student);
 
@@ -108,31 +119,12 @@ class TeacherController extends Controller
     }
 
     /**
-     * Finds and displays a grade entity.
-     *
-     * @Route("/grade/{id}", name="grade_show")
-     * @Method("GET")
-     */
-    public function showGradeAction(Grade $grade)
-    {
-        //todo bug, report to florent, just show one single grade (nothing complicated)
-    }
-
-    /**
      * Finds and displays the subjects of a student.
      *
      */
     protected function getStudentSubjects(User $student)
     {
-        $userRole = $student->getMaxRole();
-
-        if ($userRole !== 'ROLE_USER'){
-            throw new InvalidArgumentException("Student expected, ".$userRole." given");
-        }
-
-        if (!$this->isGranted('ROLE_ADMIN') && !\in_array($student, $this->getUser()->getStudents())){
-            throw new AccessDeniedException();
-        }
+        $this->checkStudentCanBeAccessed($student);
 
         $subjects = $student->getLearnedSubjects();
         if (!$this->isGranted('ROLE_TEACHER')){
@@ -149,6 +141,32 @@ class TeacherController extends Controller
     {
 
         return $subject->getStudents();
+    }
+
+    /**
+     * @param User $student
+     */
+    protected function checkStudentCanBeAccessed(User $student): void
+    {
+        $userRole = $student->getMaxRole();
+
+        if ($userRole !== 'ROLE_USER') {
+            throw new InvalidArgumentException("Student expected, " . $userRole . " given");
+        }
+
+        if (!$this->isGranted('ROLE_ADMIN') && !\in_array($student, $this->getUser()->getStudents())) {
+            throw new AccessDeniedException();
+        }
+    }
+
+    /**
+     * @param Subject $subject
+     */
+    protected function checkSubjectCanBeAccessed(Subject $subject): void
+    {
+        if (!$this->isGranted('ROLE_ADMIN') && !\in_array($subject, $this->getUser()->getTaughtSubjects()->toArray())) {
+            throw new AccessDeniedException();
+        }
     }
 }
 

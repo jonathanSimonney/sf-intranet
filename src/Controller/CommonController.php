@@ -53,27 +53,6 @@ class CommonController extends Controller
         ));
     }
 
-    /**
-     * Finds and displays a subject entity.
-     *
-     * @Route("/subject/{id}", name="subject_show")
-     * @Method("GET")
-     */
-    public function showSubjectAction(Subject $subject)
-    {
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-
-        if (!$this->isGranted('ROLE_USER')) {//todo : completely unlogical...
-            $subject = $student->getLearnedSubjects();
-        }
-
-        if (!$this->isGranted('ROLE_ADMIN')) {
-            $subject = array_intersect($subject, $this->getUser()->getTaughtSubjects());
-        }
-
-        return $this->render('common/homepage.html.twig');
-    }
-
 
     /**
      * assign a student to a subject.
