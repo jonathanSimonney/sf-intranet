@@ -1,0 +1,5 @@
+<span>
+    {% for grade in gradeArray %}
+        {{ grade }} {% if not loop.last %}, {% endif %}
+    {% endfor %}
+</span>

@@ -143,5 +143,8 @@ class Grade
         $this->subject = $subject;
     }
 
-
+    public function __toString()
+    {
+        return $this->value.'/20';
+    }
 }
