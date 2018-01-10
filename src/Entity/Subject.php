@@ -187,6 +187,11 @@ class Subject
 
     //------------------------------------------------------------------------------------------------------------------
 
+    public function hasStudent(User $student)
+    {
+        return $this->getStudents()->contains($student);
+    }
+
     public function __toString()
     {
         return $this->getName();
