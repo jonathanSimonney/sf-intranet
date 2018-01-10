@@ -39,7 +39,7 @@ class Subject
     protected $grades;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="taughtSubjects")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="taughtSubjects", cascade={"persist"})
      *
      * @var Collection
      * @ORM\JoinTable(name="teachers")
@@ -47,7 +47,7 @@ class Subject
     protected $teachers;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="learnedSubjects")
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="learnedSubjects", cascade={"persist"})
      *
      * @ORM\JoinTable(name="students")
      * @var Collection
@@ -142,7 +142,7 @@ class Subject
     {
         $this->grades->add($grade);
         // uncomment if you want to update other side
-        //$grade->setSubject($this);
+        $grade->setSubject($this);
     }
 
     /**
@@ -152,7 +152,7 @@ class Subject
     {
         $this->teachers->add($teacher);
         // uncomment if you want to update other side
-        //$teacher->addTaughtSubject($this);
+        $teacher->addTaughtSubject($this);
     }
 
     /**
@@ -162,7 +162,7 @@ class Subject
     {
         $this->teachers->removeElement($teacher);
         // uncomment if you want to update other side
-        //$teacher->removeTaughtSubject($this);
+        $teacher->removeTaughtSubject($this);
     }
 
     /**
@@ -172,7 +172,7 @@ class Subject
     {
         $this->students->add($student);
         // uncomment if you want to update other side
-        //$student->addLearnedSubject($this);
+        $student->addLearnedSubject($this);
     }
 
     /**
@@ -182,7 +182,7 @@ class Subject
     {
         $this->students->removeElement($student);
         // uncomment if you want to update other side
-        //$student->removeLearnedSubject($this);
+        $student->removeLearnedSubject($this);
     }
 
     //------------------------------------------------------------------------------------------------------------------
