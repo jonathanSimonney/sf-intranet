@@ -86,25 +86,35 @@ class AdminController extends Controller
      */
     public function showAndEditUserAction(Request $request, User $user)
     {
+        $role = $user->getMaxRole();
         //todo show the user ; give route to edit his role, impersonate him, and give him his grade (if he is a student).
         //Also, add him a subject, show his subject, his grade, etc.
 
         //todo add options to know which subjects should be shown.
-        $user->setRole($user->getMaxRole());
+        $user->setRole($role);
 
-        $form = $this->createForm('App\Form\UserType', $user);
+        $options = array();
+
+        if ($role === 'ROLE_USER'){
+            $options['isStudent'] = true;
+        }elseif ($role === 'ROLE_TEACHER'){
+            $options['isTeacher'] = true;
+        }
+
+        $form = $this->createForm('App\Form\UserType', $user, $options);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
             $user->setRoles([$user->getRole()]);
+
             $em->persist($user);
             $em->flush();
 
             return $this->redirectToRoute('user_index');
         }
-        $user->setRole($user->getMaxRole());
 
         return $this->render('views/user/show.html.twig', array(
             'user'     => $user,
