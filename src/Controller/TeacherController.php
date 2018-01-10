@@ -7,6 +7,7 @@ use App\Entity\Subject;
 use App\Entity\User;
 use Psr\Log\InvalidArgumentException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -71,7 +72,7 @@ class TeacherController extends Controller
             $em->persist($grade);
             $em->flush();
 
-            return $this->redirectToRoute('grade_show', array('id' => $grade->getId()));
+            return $this->redirectToRoute('subject_show', array('id' => $grade->getSubject()->getId()));
         }
 
         return $this->render('views/grade/new.html.twig', array(
@@ -103,6 +104,24 @@ class TeacherController extends Controller
         $grade->setOwner($student);
 
         $options = ['ownerDisabled' => true];
+        return $this->createGrade($grade, $request, $options);
+    }
+
+    /**
+     * @Route("/grade/new/from/subject/and/student/{subject_id}/{student_id}", name="new_grade_from_subject_and_student")
+     * @ParamConverter("subject", options={"id" = "subject_id"})
+     * @ParamConverter("student", options={"id" = "student_id"})
+     */
+    public function newGradeFromSubjectAndStudentAction(Request $request, Subject $subject, User $student)
+    {
+        $this->checkSubjectCanBeAccessed($subject);
+        $this->checkStudentCanBeAccessed($student);
+
+        $grade = new Grade();
+        $grade->setSubject($subject);
+        $grade->setOwner($student);
+
+        $options = ['subjectDisabled' => true, 'ownerDisabled' => true];
         return $this->createGrade($grade, $request, $options);
     }
 
