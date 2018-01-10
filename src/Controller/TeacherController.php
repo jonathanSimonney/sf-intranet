@@ -29,6 +29,7 @@ class TeacherController extends Controller
         return $this->render('@Maker/demoPage.html.twig', [ 'path' => str_replace($this->getParameter('kernel.project_dir').'/', '', __FILE__) ]);
     }
 
+
     protected function createGrade(Grade $grade, Request $request, $options=array())
     {
         $grade->setGivenBy($this->getUser());
@@ -114,8 +115,11 @@ class TeacherController extends Controller
      */
     public function showGradeAction(Grade $grade)
     {
-        die(var_dump($grade));
-        //todo use this action to show the grade ACCORDING TO WHO IS LOOKING AT IT (and do not forget to check he has the right to do so...)
+        $userRole = $student->getMaxRole();
+        if ($userRole !== 'ROLE_USER'){
+            throw new InvalidArgumentException("Student expected, ".$userRole." given");
+        }
+
     }
 
     /**
@@ -125,6 +129,7 @@ class TeacherController extends Controller
     protected function getStudentSubjects(User $student)
     {
         $userRole = $student->getMaxRole();
+
         if ($userRole !== 'ROLE_USER'){
             throw new InvalidArgumentException("Student expected, ".$userRole." given");
         }
@@ -134,10 +139,9 @@ class TeacherController extends Controller
         }
 
         $subjects = $student->getLearnedSubjects();
-         if (!$this->isGranted('ROLE_ADMIN')){
-             $subjects = array_intersect($subjects, $this->getUser()->getTaughtSubjects());
-         }
-
+        if (!$this->isGranted('ROLE_ADMIN')){
+            $subjects = array_intersect($subjects, $this->getUser()->getTaughtSubjects());
+        }
         return $subjects;
     }
 
@@ -147,10 +151,8 @@ class TeacherController extends Controller
      */
     protected function getSubjectStudent(Subject $subject)
     {
-        if (!$this->isGranted('ROLE_ADMIN') && !\in_array($subject, $this->getUser()->getTaughtSubjects())){
-            throw new AccessDeniedException();
-        }
 
         return $subject->getStudents();
     }
 }
+

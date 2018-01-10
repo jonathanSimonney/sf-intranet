@@ -170,13 +170,13 @@ class User extends BaseUser
         $students = array();
 
         foreach ($this->getTaughtSubjects() as $taughtSubject){
-            /** @var Subject $taughtSubject */
-            if (!empty($students)) {
-                $students = array_merge($students, $taughtSubject->getStudents()->toArray());
-            }else{
-                $students = $taughtSubject->getStudents()->toArray();
-            }
+        /** @var Subject $taughtSubject */
+        if (!empty($students)) {
+            $students = array_merge($students, $taughtSubject->getStudents()->toArray());
+        }else{
+            $students = $taughtSubject->getStudents()->toArray();
         }
+    }
 
         return $students;
     }

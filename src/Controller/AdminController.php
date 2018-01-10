@@ -50,4 +50,8 @@ class AdminController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    public function ChangeProfile(Request $request) {
+
+    }
 }

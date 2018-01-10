@@ -185,6 +185,7 @@ class Subject
         //$student->removeLearnedSubject($this);
     }
 
+
     //------------------------------------------------------------------------------------------------------------------
 
     public function __toString()
