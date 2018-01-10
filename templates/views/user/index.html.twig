@@ -2,6 +2,14 @@
 
 {% block body %}
     <h1>User list</h1>
+
+    <div id="userFilter" class="row">
+        <button class="red accent-2 col s2 offset-s1 btn waves-effect waves-light disabled" id="allUsers">all users</button>
+        <button class="red accent-2 col s2 offset-s1 btn waves-effect waves-light" id="student">students</button>
+        <button class="red accent-2 col s2 offset-s1 btn waves-effect waves-light" id="teacher">teachers</button>
+        <button class="red accent-2 col s2 offset-s1 btn waves-effect waves-light" id="admin">admin</button>
+    </div>
+
     {% for user in userList %}
         <div class="{{ user.getMaxRole }} user">
             <div class="section" >
@@ -20,8 +28,6 @@
 {% endblock %}
 
 {% block javascripts %}
-    {% if role == 'student' %}
-        {{ parent() }}
-        <script src={{ asset('switchUser.js')}}></script>
-    {% endif %}
+    {{ parent() }}
+    <script src={{ asset('switchUser.js')}}></script>
 {% endblock %}
