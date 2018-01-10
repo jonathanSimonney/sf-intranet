@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Subject;
+use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -51,7 +52,43 @@ class AdminController extends Controller
         ));
     }
 
-    public function ChangeProfile(Request $request) {
+    /**
+     * displays all user entities.
+     *
+     * @Route("/user", name="user_index")
+     * @Method("GET")
+     */
+    public function indexUserAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $userList = $em->getRepository('App:User')->findAll();
 
+        return $this->render('views/user/index.html.twig', array(
+            'userList'     => $userList
+        ));
+    }
+
+    /**
+     * login as another user.
+     *
+     * @Route("/impersonate/user/{id}", name="user_impersonate")
+     * @Method("GET")
+     */
+    public function impersonateUser(User $user)
+    {
+        return $this->redirect($this->generateUrl('homepage', array('_switch_user' => $user->getUsernameCanonical())));
+    }
+
+    /**
+     * Finds and displays a user entity.
+     *
+     * @Route("/show/user/{id}", name="user_show")
+     * @Method("GET")
+     */
+    public function showSubjectAction(User $user)
+    {
+        //todo show the user ; give route to edit his role, impersonate him, and give him a grade (if he is a student).
+        //Also, add him a subject, show his subject, his grade, etc.
+        die(var_dump($user));
     }
 }

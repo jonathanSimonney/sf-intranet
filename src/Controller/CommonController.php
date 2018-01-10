@@ -63,7 +63,7 @@ class CommonController extends Controller
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        if (!$this->isGranted('ROLE_USER')) {
+        if (!$this->isGranted('ROLE_USER')) {//todo : completely unlogical...
             $subject = $student->getLearnedSubjects();
         }
 

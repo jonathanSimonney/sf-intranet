@@ -29,7 +29,7 @@
                 {% if role == 'student' %}
                     <div class="row">
                         {{ form_start(assignmentForms[subject.id].createView()) }}
-                        <button class="red accent-2 col s2 offset-s1 btn waves-effect waves-light" type="submit" name="action">
+                        <button class="red accent-2 col s2 offset-s1 btn-large waves-effect waves-light" type="submit" name="action">
                             {%  if subject.hasStudent(app.user) %}
                                 Unsign from course
                             {% else %}
