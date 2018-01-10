@@ -47,7 +47,7 @@ class CommonController extends Controller
             }
         }
 
-        return $this->render(':views/subject:index.html.twig', array(
+        return $this->render('views/subject/index.html.twig', array(
             'subjectList'     => $subjectList,
             'assignmentForms' => $arrayFormAssignment
         ));
@@ -98,7 +98,7 @@ class CommonController extends Controller
     /**
      * assign a student to a subject.
      *
-     * @Route("/unassign/to/subject/{id}", name="subject_assign")
+     * @Route("/unassign/to/subject/{id}", name="subject_unassign")
      * @Method("POST")
      */
     public function unassignToSubjectAction(Request $request, Subject $subject)

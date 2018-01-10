@@ -28,13 +28,8 @@
                             Sign to course
                         {% endif %}
                     </button>
-                    {{ form_end(delete_tickets_forms[ticket.id].createView()) }}
+                    {{ form_end(assignmentForms[subject.id].createView()) }}
                 </div>
-            {% elseif role == 'teacher' %}
-                Wait for the admin to assign you to some subject.
-            {% else %}
-                Create some subjects with this button. <br>
-                <a class="col s2 red accent-2 btn waves-effect waves-light" href="{{ path('subject_new') }}">create subject</a>
             {% endif %}
         </div>
         <div class="divider"></div>
