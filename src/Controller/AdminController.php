@@ -83,12 +83,32 @@ class AdminController extends Controller
      * Finds and displays a user entity.
      *
      * @Route("/show/user/{id}", name="user_show")
-     * @Method("GET")
      */
-    public function showSubjectAction(User $user)
+    public function showAndEditUserAction(Request $request, User $user)
     {
-        //todo show the user ; give route to edit his role, impersonate him, and give him a grade (if he is a student).
+        //todo show the user ; give route to edit his role, impersonate him, and give him his grade (if he is a student).
         //Also, add him a subject, show his subject, his grade, etc.
-        die(var_dump($user));
+
+        //todo add options to know which subjects should be shown.
+        $user->setRole($user->getMaxRole());
+
+        $form = $this->createForm('App\Form\UserType', $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $user->setRoles([$user->getRole()]);
+            $em->persist($user);
+            $em->flush();
+
+            return $this->redirectToRoute('user_index');
+        }
+        $user->setRole($user->getMaxRole());
+
+        return $this->render('views/user/show.html.twig', array(
+            'user'     => $user,
+            'editForm' => $form->createView(),
+        ));
     }
 }

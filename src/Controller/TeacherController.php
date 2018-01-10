@@ -115,16 +115,7 @@ class TeacherController extends Controller
      */
     public function showGradeAction(Grade $grade)
     {
-        $grade = array();
-
-        foreach ($this->getGivenBy() as $givenBy){
-            /** @var Subject $taughtSubject */
-            if (!empty($grade)) {
-                $grade = array_merge($grades, $givenBy->getUser()()->toArray());
-            }else{
-                $grade = $givenBy->getUser()()->toArray();
-            }
-
+        //todo bug, report to florent, just show one single grade (nothing complicated)
     }
 
     /**

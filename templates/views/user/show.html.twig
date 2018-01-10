@@ -1,0 +1,16 @@
+{% extends 'common/connected.html.twig' %}
+
+{% block body %}
+    <h3>{{ user.username }}</h3>
+
+    <div>
+        {{ form_start(editForm) }}
+        {{ form_widget(editForm) }}
+        <button class="red accent-2 btn waves-effect waves-light" type="submit" name="action">
+            Edit
+        </button>
+        {{ form_end(editForm) }}
+    </div>
+    {# form avec matière #}
+    {# liste des notes #}
+{% endblock %}
