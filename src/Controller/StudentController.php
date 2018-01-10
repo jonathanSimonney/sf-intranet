@@ -27,9 +27,26 @@ class StudentController extends Controller
     public function indexGradeAction() {
 
         $em = $this->getDoctrine()->getManager();
-        $gradeList = $em->getRepository('App:Grade')->findAll();
+        $gradeList = $em->getRepository('App:Grade')->getGroupedGrade($this->getUser());
+
+        //should be done in query builder...
+        $gradeGroupedBySubject = array();
+        $sum = 0;
+
+        foreach ($gradeList as $grade){
+            if (isset($gradeGroupedBySubject[$grade['subjectName']])){
+                $gradeGroupedBySubject[$grade['subjectName']][] = $grade['value'].'/20';
+            }else{
+                $gradeGroupedBySubject[$grade['subjectName']] = [$grade['value'].'/20'];
+            }
+            $sum += $grade['value'];
+        }
+
+        $average = $sum / count($gradeList);
+
         return $this->render('views/grade/index.html.twig', array(
-            'gradeGroupedBySubject'     => $gradeList
+            'gradeGroupedBySubject'     => $gradeGroupedBySubject,
+            'average'                   => $average,
         ));
     }
 

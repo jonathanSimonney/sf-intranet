@@ -4,17 +4,20 @@
     <h1>Grades</h1>
 
     <div  class="row">
-        Average
+        Average : {{ average }}
     </div>
 
-        <div>
-            <div class="section" >
-            </div>
-            {% for subject , gradeArray in gradeGroupedBySubject %}
-                <li>{{ gradeArray.subject }} : {{ gradeArray }}</li>
-            {% endfor %}
-            <div class="divider"></div>
+    {% for subjectName, arrayGrade in gradeGroupedBySubject %}
+        <div class="section" >
+            <h2 class="row" >
+                <span class="ticket_title red-text text-darken-1">
+                    {{ subjectName }}
+                </span>
+            </h2>
+            {% include 'views/grade/showCollection.html.twig' with {'gradeArray' : arrayGrade} %}
         </div>
+        <div class="divider"></div>
+    {% endfor %}
 {% endblock %}
 
 {% block javascripts %}

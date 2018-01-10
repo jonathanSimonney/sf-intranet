@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Grade;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
@@ -13,10 +14,16 @@ class GradeRepository extends ServiceEntityRepository
         parent::__construct($registry, Grade::class);
     }
 
-    public function getGroupedGrade()
+    public function getGroupedGrade(User $user)
     {
         return $this->createQueryBuilder('g')
-            ->groupBy('subject')
+            ->select('g.value AS value')
+            ->addSelect('sub.name AS subjectName')
+            //->addSelect('SUM(g.value)/COUNT(g) AS average')
+            ->where('g.owner = :user')->setParameter('user', $user)
+            ->andWhere('g.subject IN (:subjectList)')->setParameter('subjectList', $user->getLearnedSubjects()->toArray())
+            //->orderBy('sub.name')
+            ->leftJoin('g.subject', 'sub')
             ->getQuery()
             ->getResult();
     }
