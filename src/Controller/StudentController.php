@@ -30,23 +30,31 @@ class StudentController extends Controller
         $gradeList = $em->getRepository('App:Grade')->getGroupedGrade($this->getUser());
 
         //should be done in query builder...
-        $gradeGroupedBySubject = array();
-        $sum = 0;
 
-        foreach ($gradeList as $grade){
-            if (isset($gradeGroupedBySubject[$grade['subjectName']])){
-                $gradeGroupedBySubject[$grade['subjectName']][] = $grade['value'].'/20';
-            }else{
-                $gradeGroupedBySubject[$grade['subjectName']] = [$grade['value'].'/20'];
+        if (\count($gradeList) !== 0){
+            $gradeGroupedBySubject = array();
+            $sum = 0;
+
+            foreach ($gradeList as $grade){
+                if (isset($gradeGroupedBySubject[$grade['subjectName']])){
+                    $gradeGroupedBySubject[$grade['subjectName']][] = $grade['value'].'/20';
+                }else{
+                    $gradeGroupedBySubject[$grade['subjectName']] = [$grade['value'].'/20'];
+                }
+                $sum += $grade['value'];
             }
-            $sum += $grade['value'];
+
+            $average = $sum / \count($gradeList);
+
+            return $this->render('views/grade/index.html.twig', array(
+                'gradeGroupedBySubject'     => $gradeGroupedBySubject,
+                'average'                   => $average,
+            ));
         }
 
-        $average = $sum / count($gradeList);
-
         return $this->render('views/grade/index.html.twig', array(
-            'gradeGroupedBySubject'     => $gradeGroupedBySubject,
-            'average'                   => $average,
+            'gradeGroupedBySubject'     => array(),
+            'average'                   => false,
         ));
     }
 
