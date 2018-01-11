@@ -1,5 +1,12 @@
-<span>
-    {% for grade in gradeArray %}
-        {{ grade }} {% if not loop.last %}, {% endif %}
-    {% endfor %}
-</span>
+<table>
+    {% if gradeArray is empty %}
+        <tr>No grade given.</tr>
+    {% else %}
+        {% for grade in gradeArray %}
+            <tr>
+                <td> {{ grade }} </td>
+                <td> {{ grade.comment }} </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+</table>

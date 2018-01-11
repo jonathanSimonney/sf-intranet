@@ -37,11 +37,11 @@ class StudentController extends Controller
 
             foreach ($gradeList as $grade){
                 if (isset($gradeGroupedBySubject[$grade['subjectName']])){
-                    $gradeGroupedBySubject[$grade['subjectName']][] = $grade['value'].'/20';
+                    $gradeGroupedBySubject[$grade['subjectName']][] = $grade['grade'];
                 }else{
-                    $gradeGroupedBySubject[$grade['subjectName']] = [$grade['value'].'/20'];
+                    $gradeGroupedBySubject[$grade['subjectName']] = [$grade['grade']];
                 }
-                $sum += $grade['value'];
+                $sum += $grade['grade']->getValue();
             }
 
             $average = $sum / \count($gradeList);

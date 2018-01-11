@@ -17,7 +17,7 @@ class GradeRepository extends ServiceEntityRepository
     public function getGroupedGrade(User $user)
     {
         return $this->createQueryBuilder('g')
-            ->select('g.value AS value')
+            ->select('g AS grade')
             ->addSelect('sub.name AS subjectName')
             //->addSelect('SUM(g.value)/COUNT(g) AS average')
             ->where('g.owner = :user')->setParameter('user', $user)
