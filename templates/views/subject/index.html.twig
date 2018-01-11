@@ -24,9 +24,13 @@
         <div class="{% if subject.hasStudent(app.user) %} mySubject{% else %} notMySubject{% endif %} subject">
             <div class="section" >
                 {% if role != 'student' %}
-                <h2 class="row" >
-                    <a class="ticket_title red-text text-darken-1" href="{{ path('subject_show', { 'id': subject.id }) }}">{{ subject.name }}</a>
-                </h2>
+                    <h2 class="row" >
+                        <a class="ticket_title red-text text-darken-1" href="{{ path('subject_show', { 'id': subject.id }) }}">{{ subject.name }}</a>
+                    </h2>
+                {% else %}
+                    <h2 class="row" >
+                        <span class="ticket_title red-text text-darken-1">{{ subject.name }}</span>
+                    </h2>
                 {% endif %}
                 {% if role == 'student' %}
                     <div class="row">
