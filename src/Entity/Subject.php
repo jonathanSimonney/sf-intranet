@@ -106,7 +106,9 @@ class Subject
      */
     public function getTeachers(): Collection
     {
-        return $this->teachers;
+        return $this->teachers->filter(function (User $potentialTeacher){
+            return $potentialTeacher->hasRole('ROLE_TEACHER');
+        });
     }
 
     /**
@@ -122,7 +124,9 @@ class Subject
      */
     public function getStudents(): Collection
     {
-        return $this->students;
+        return $this->students->filter(function (User $potentialStudent){
+            return !$potentialStudent->hasRole('ROLE_TEACHER');
+        });
     }
 
     /**

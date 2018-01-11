@@ -22,7 +22,7 @@ class GradeRepository extends ServiceEntityRepository
             //->addSelect('SUM(g.value)/COUNT(g) AS average')
             ->where('g.owner = :user')->setParameter('user', $user)
             ->andWhere('g.subject IN (:subjectList)')->setParameter('subjectList', $user->getLearnedSubjects()->toArray())
-            //->orderBy('sub.name')
+            //->groupBy('sub.name')
             ->leftJoin('g.subject', 'sub')
             ->getQuery()
             ->getResult();

@@ -37,9 +37,9 @@
                         {{ form_start(assignmentForms[subject.id].createView()) }}
                         <button class="red accent-2 col s2 offset-s1 btn-large waves-effect waves-light" type="submit" name="action">
                             {%  if subject.hasStudent(app.user) %}
-                                Unsign from course
+                                Unsign
                             {% else %}
-                                Sign to course
+                                Sign
                             {% endif %}
                         </button>
                         {{ form_end(assignmentForms[subject.id].createView()) }}
